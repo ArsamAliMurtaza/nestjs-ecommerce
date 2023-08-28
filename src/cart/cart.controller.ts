@@ -14,14 +14,31 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { CartService } from './cart.service';
 import { ItemDTO } from './dtos/item.dto';
+import {
+  ApiTags,
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+  ApiBadRequestResponse,
+  ApiNotFoundResponse,
+  ApiUnauthorizedResponse,
+  ApiInternalServerErrorResponse,
+} from '@nestjs/swagger';
 
 @Controller('cart')
+@ApiTags('cart')
+@ApiBearerAuth()
 export class CartController {
   constructor(private cartService: CartService) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.User)
   @Post('/')
+  @ApiOperation({ summary: 'Add an item to the cart' })
+  @ApiResponse({ status: 200, description: 'Returns the updated cart.' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
   async addItemToCart(@Request() req, @Body() itemDTO: ItemDTO) {
     const userId = req.user.userId;
     const cart = await this.cartService.addItemToCart(userId, itemDTO);
@@ -31,6 +48,11 @@ export class CartController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.User)
   @Delete('/')
+  @ApiOperation({ summary: 'Remove an item from the cart' })
+  @ApiResponse({ status: 200, description: 'Returns the updated cart.' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
+  @ApiBadRequestResponse({ description: 'Bad request.' })
+  @ApiNotFoundResponse({ description: 'Item does not exist.' })
   async removeItemFromCart(@Request() req, @Body() { productId }) {
     const userId = req.user.userId;
     const cart = await this.cartService.removeItemFromCart(userId, productId);
@@ -41,6 +63,12 @@ export class CartController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.User)
   @Delete('/:id')
+  @ApiOperation({ summary: 'Delete the cart by user ID' })
+  @ApiParam({ name: 'id', description: 'User ID' })
+  @ApiResponse({ status: 200, description: 'Returns the deleted cart.' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
+  @ApiNotFoundResponse({ description: 'Cart does not exist.' })
+  @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
   async deleteCart(@Param('id') userId: string) {
     const cart = await this.cartService.deleteCart(userId);
     if (!cart) throw new NotFoundException('Cart does not exist');
