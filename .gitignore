@@ -3,7 +3,7 @@
 /node_modules
 
 # Source code and configuration
-/.env
+.env
 
 # Logs
 logs
