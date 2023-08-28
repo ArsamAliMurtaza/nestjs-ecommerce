@@ -5,27 +5,47 @@
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+ 
+## E-commerce Backend with Nest.js and MongoDB
 
-## Description
+This application is a backend system for an e-commerce platform built using Nest.js and MongoDB. It provides the foundational infrastructure for managing products, user authentication, and shopping carts. The application leverages the power of Nest.js, a Node.js framework, and MongoDB, a NoSQL database, to create a basic and scalable backend solution for e-commerce functionality.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Key Features:
 
+    Product Management:
+    Products can be added, retrieved, updated, and deleted through API endpoints. Each product has attributes such as name, description, price, and category.
+
+    User Authentication:
+    User registration and login are supported. Users can sign up with usernames, email addresses, and passwords. Authentication is secured using JWT (JSON Web Tokens) for token-based authentication.
+
+    Role-Based Access Control:
+    Users are assigned roles such as "user," "admin," or "member." Role-based access control ensures that only authorized users can perform certain actions, enhancing security and user experience.
+
+    Shopping Cart:
+    Users can add items to their shopping carts and remove items from them. The application supports user-specific shopping carts, ensuring personalized shopping experiences.
+
+Technology Stack:
+
+    Framework: Nest.js
+    Database: MongoDB
+    Authentication: JWT (JSON Web Tokens)
+API Endpoints and How They Work:
+
+    Product Endpoints:
+        GET /store/products: Retrieves a list of all products or applies filters if provided.
+        GET /store/products/:id: Retrieves details of a specific product based on its ID.
+        POST /store/products: Adds a new product with details provided in the request body.
+        PUT /store/products/:id: Updates details of a specific product.
+        DELETE /store/products/:id: Deletes a product based on its ID.
+
+    User Authentication Endpoints:
+        POST /auth/register: Allows users to register by providing a username, email, password, and roles.
+        POST /auth/login: Allows users to log in with their credentials, returning a JWT token for authorization.
+
+    Cart Endpoints:
+        POST /cart: Adds an item to the user's shopping cart, requiring authentication.
+        DELETE /cart: Removes an item from the user's shopping cart, requiring authentication.
+        DELETE /cart/:id: Deletes the entire shopping cart of a user, requiring authentication.
 ## Installation
 
 ```bash
