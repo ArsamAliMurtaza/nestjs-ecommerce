@@ -88,4 +88,22 @@ export class CartService {
       return cart.save();
     }
   }
+  calculateTotalPrice(cart: CartDocument): number {
+    let totalPrice = 0;
+    cart.items.forEach((item) => {
+      totalPrice += item.subTotalPrice;
+    });
+    return totalPrice;
+  }
+  async clearCart(userId: string): Promise<Cart> {
+    const cart = await this.getCart(userId);
+
+    if (cart) {
+      cart.items = [];
+      cart.totalPrice = 0;
+      return cart.save();
+    }
+
+    return null;
+  }
 }

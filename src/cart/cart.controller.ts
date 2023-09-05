@@ -13,6 +13,7 @@ import { Role } from 'src/auth/enums/role.enum';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { CartService } from './cart.service';
+import { CheckoutService } from './checkout.service';
 import { ItemDTO } from './dtos/item.dto';
 import {
   ApiTags,
@@ -20,7 +21,6 @@ import {
   ApiOperation,
   ApiResponse,
   ApiParam,
-  ApiBody,
   ApiBadRequestResponse,
   ApiNotFoundResponse,
   ApiUnauthorizedResponse,
@@ -31,7 +31,10 @@ import {
 @ApiTags('cart')
 @ApiBearerAuth()
 export class CartController {
-  constructor(private cartService: CartService) {}
+  constructor(
+    private readonly cartService: CartService,
+    private readonly checkoutService: CheckoutService,
+  ) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.User)
@@ -73,5 +76,15 @@ export class CartController {
     const cart = await this.cartService.deleteCart(userId);
     if (!cart) throw new NotFoundException('Cart does not exist');
     return cart;
+  }
+
+  @Post('/checkout')
+  @ApiOperation({ summary: 'Process checkout and clear the cart' })
+  @ApiResponse({ status: 200, description: 'Checkout successful' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
+  @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
+  async checkout(@Request() req) {
+    const userId = req.user.userId;
+    await this.checkoutService.processCheckout(userId);
   }
 }
