@@ -5,7 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CartSchema } from './schemas/cart.schema';
 import { CheckoutService } from './checkout.service';
 import { EmailService } from './email.service';
-import { UserService } from 'src/user/services/user.service';
 import { UserModule } from 'src/user/modules/user.module';
 
 @Module({
