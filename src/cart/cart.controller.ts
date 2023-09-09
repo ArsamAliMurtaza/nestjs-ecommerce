@@ -78,13 +78,15 @@ export class CartController {
     return cart;
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.User)
   @Post('/checkout')
   @ApiOperation({ summary: 'Process checkout and clear the cart' })
   @ApiResponse({ status: 200, description: 'Checkout successful' })
   @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
   @ApiInternalServerErrorResponse({ description: 'Internal server error.' })
   async checkout(@Request() req) {
-    const userId = req.user.userId;
+    const userId = req.user.id; 
     await this.checkoutService.processCheckout(userId);
   }
 }
